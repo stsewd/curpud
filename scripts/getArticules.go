@@ -1,20 +1,20 @@
 package main
 
 import (
-	"net/http"
-	"golang.org/x/net/html"
-	"regexp"
-	"github.com/gocarina/gocsv"
-	"os"
-	"strconv"
 	"fmt"
+	"github.com/gocarina/gocsv"
+	"golang.org/x/net/html"
+	"net/http"
+	"os"
+	"regexp"
+	"strconv"
 	"sync"
 )
 
 type Knowledge struct {
 	SortName string `csv:"ShortName"`
 	LongName string `csv:"LongName"`
-	Issn string     `csv:"Issn"`
+	Issn     string `csv:"Issn"`
 }
 
 func GetDataKnowledge(url string) (knowledge []Knowledge) {
@@ -30,23 +30,23 @@ func GetDataKnowledge(url string) (knowledge []Knowledge) {
 		valid := regexp.MustCompile(`^\d*\. (.*)`)
 		short_name := valid.FindStringSubmatch(string(parser.Raw()))
 
-		if len(short_name) != 0  {
-			for index:=0; index < 3 ;index++  {
+		if len(short_name) != 0 {
+			for index := 0; index < 3; index++ {
 				tokenType = parser.Next()
 			}
 			valid1 := regexp.MustCompile(`ISSN: (.*)`)
 			issn := valid1.FindStringSubmatch(string(parser.Raw()))
 
-			for index := 0; index < 3; index++{
+			for index := 0; index < 3; index++ {
 				tokenType = parser.Next()
 			}
 
 			knowledge = append(knowledge, Knowledge{
-				SortName:short_name[1],
-				LongName:string(parser.Raw()),
-				Issn:issn[1],
+				SortName: short_name[1],
+				LongName: string(parser.Raw()),
+				Issn:     issn[1],
 			})
-		}else {
+		} else {
 			continue
 		}
 
@@ -83,9 +83,7 @@ func SaveData(nameFile string, data interface{}) {
 }
 
 func main() {
-	
-	SaveData("knowledge",InitKnowledge())
 
+	SaveData("knowledge", InitKnowledge())
 
 }
-
