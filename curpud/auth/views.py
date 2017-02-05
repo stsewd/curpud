@@ -17,7 +17,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 @auth.route('/login/', methods=['GET', 'POST'])
-def signin():
+def login():
     if request.method == 'GET':
         return render_template('auth/login.html')
 
@@ -38,3 +38,10 @@ def signin():
             'auth/login.html',
             error="Usuario o contraseña no válidos."
         )
+
+
+@auth.route('/logout/')
+@flask_login.login_required
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for('index'))

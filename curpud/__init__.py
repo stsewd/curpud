@@ -4,6 +4,7 @@ from flask import (
     render_template,
     redirect,
     url_for,
+    abort,
     g
 )
 import flask_login
@@ -86,6 +87,11 @@ def request_loader(request):
         return auser
     except:
         return
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    abort(404)
 
 
 @app.before_request

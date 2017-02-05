@@ -1,7 +1,10 @@
 import peewee as orm
 from flask_admin.contrib.peewee import ModelView
+from flask import url_for, redirect
+import flask_login
 
 from curpud import db
+from curpud.auth.models import User
 
 
 # Translations
@@ -21,6 +24,17 @@ class BaseModel(orm.Model):
 class BaseModelView(ModelView):
     can_export = True
     details_modal = True
+
+    def is_accessible(self):
+        auser = flask_login.current_user
+        if auser.is_anonymous:
+            return False
+        user = User.get(User.login == auser.id)
+        return auser.is_authenticated and user.is_admin
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('auth.login'))
 
 
 class Relevance(BaseModel):
