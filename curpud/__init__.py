@@ -6,7 +6,6 @@ from flask import (
     g
 )
 from flask_admin import Admin
-from flask_admin.contrib.peewee import ModelView
 import peewee as orm
 
 
@@ -28,19 +27,23 @@ db = orm.MySQLDatabase(
     passwd=app.config['DB_PASSWD']
 )
 
-from .publications.models import Relevance, DataBase, Jounal
+from .publications.models import (
+    Relevance, RelevanceView,
+    DataBase, DataBaseView,
+    Journal, JournalView
+)
 
 try:
     db.connect()
-    db.create_tables([Relevance, DataBase, Jounal])
+    db.create_tables([Relevance, DataBase, Journal])
 except Exception as e:
     pass
 
 
 admin = Admin(app, name='curpud', template_mode='bootstrap3')
-admin.add_view(ModelView(Relevance))
-admin.add_view(ModelView(DataBase))
-admin.add_view(ModelView(Jounal))
+admin.add_view(RelevanceView(Relevance, 'Relevancia'))
+admin.add_view(DataBaseView(DataBase, 'Base de Datos'))
+admin.add_view(JournalView(Journal, 'Revista'))
 
 
 @app.before_request
