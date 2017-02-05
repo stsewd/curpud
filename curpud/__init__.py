@@ -40,7 +40,11 @@ except Exception as e:
     pass
 
 
-admin = Admin(app, name='curpud', template_mode='bootstrap3')
+admin = Admin(
+    app, name='curpud',
+    base_template='custom_admin/master.html',
+    template_mode='bootstrap3'
+)
 admin.add_views(
     RelevanceView(Relevance, 'Categorías', category='Revista'),
     DataBaseView(DataBase, 'Bases de Datos', category='Revista'),

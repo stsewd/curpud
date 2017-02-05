@@ -1,0 +1,50 @@
+{% extends 'admin/base.html' %}
+
+{% block head_meta %}
+{{ super() }}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block head_css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" type="text/css" media="all" />
+{% endblock %}
+
+{% block brand %}
+{% endblock %}
+
+{% block main_menu %}
+{% endblock %}
+
+{% block page_body %}
+<div class="container">
+  <div class="row">
+    <div class="container col-sm-3">
+      <nav>
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="{{ url_for('journal.index_view') }}">Revistas</a></li>
+          <li><a href="{{ url_for('database.index_view') }}">Bases de Datos</a></li>
+          <li><a href="{{ url_for('relevance.index_view') }}">Tipos de Relevancia</a></li>
+          <li class="hidden-xs">
+            <hr>
+            <footer>
+              <small class="text-muted">
+                Copyright (c) 2016 - <a href="http://www.github.com/trivialbox">trivialbox</a>.
+              </small>
+            </footer>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-sm-9" id="main-content">
+      {{ super() }}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+ {% block tail_js %}
+ <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+ <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+ {{ super() }}
+ {% endblock %}
