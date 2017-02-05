@@ -2,3 +2,7 @@ flask
 Flask-Testing
 Flask-WTF
 Faker
+Flask-Admin
+peewee
+PyMySQL
+wtf-peewee
