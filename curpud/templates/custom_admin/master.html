@@ -24,7 +24,7 @@
         <ul class="nav nav-pills nav-stacked">
           <li><a href="{{ url_for('journal.index_view') }}">Revistas</a></li>
           <li><a href="{{ url_for('database.index_view') }}">Bases de Datos</a></li>
-          <li><a href="{{ url_for('relevance.index_view') }}">Tipos de Relevancia</a></li>
+          <li><a href="{{ url_for('relevance.index_view') }}">Categorías</a></li>
           <li class="hidden-xs">
             <hr>
             <footer>
@@ -37,6 +37,11 @@
       </nav>
     </div>
     <div class="col-sm-9" id="main-content">
+      <h1>
+        <a href="">
+          {{ admin_view.name }}
+        </a>
+      </h1>
       {{ super() }}
     </div>
   </div>
