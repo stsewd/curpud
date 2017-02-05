@@ -19,7 +19,9 @@ def index():
 
 
 from .auth.views import auth
+from .courses.views import cour
 from .publications.views import pub
 
 app.register_blueprint(auth)
+app.register_blueprint(cour)
 app.register_blueprint(pub)
