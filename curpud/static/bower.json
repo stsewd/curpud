@@ -1,0 +1,20 @@
+{
+  "name": "curpud",
+  "homepage": "https://github.com/trivialbox/curpud",
+  "authors": [
+    "Santos Gallegos <santos_g@outlook.com>"
+  ],
+  "description": "Sistema de gestión de cursos y publicaciones de profesores",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-pjax": "^1.9.6"
+  }
+}
