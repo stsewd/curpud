@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+
+{% block title %}Sobre escribir título{% endblock %}
+
+
+{% block main_container %}
+<div class="text-center">
   <h1>404</h1>
-</body>
-</html>
+  <small>Cuatrocientos Cuatro</small>
+  <br>
+  <small>
+    <a href="{{ url_for('index') }}">
+      Volver al Inicio
+    </a>
+  </small>
+</div>
+{% endblock %}
