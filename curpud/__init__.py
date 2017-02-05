@@ -1,3 +1,4 @@
+from hashlib import md5
 from flask import (
     Flask,
     render_template,
@@ -5,7 +6,8 @@ from flask import (
     url_for,
     g
 )
-from flask_admin import Admin
+import flask_login
+import flask_admin
 import peewee as orm
 
 
@@ -32,15 +34,18 @@ from .publications.models import (
     DataBase, DataBaseView,
     Journal, JournalView
 )
+from .auth.models import User, AuthUser
 
 try:
     db.connect()
+    db.create_tables([User])
     db.create_tables([Relevance, DataBase, Journal])
 except Exception as e:
     pass
 
 
-admin = Admin(
+# Admin panel configurations
+admin = flask_admin.Admin(
     app, name='curpud',
     base_template='custom_admin/master.html',
     template_mode='bootstrap3'
@@ -50,6 +55,37 @@ admin.add_views(
     DataBaseView(DataBase, 'Bases de Datos', category='Revista'),
     JournalView(Journal, 'Revistas', category='Revista')
 )
+
+
+# Authentication configuration
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def user_loader(login):
+    try:
+        user = User.get(User.login == login)
+        auser = AuthUser()
+        auser.id = user.login
+        return auser
+    except:
+        return
+
+
+@login_manager.request_loader
+def request_loader(request):
+    login = request.form.get('login')
+    try:
+        user = User.get(User.login == login)
+        auser = AuthUser()
+        auser.id = user.login
+
+        passwd = md5(request.form['pw'].encode()).hexdigest()
+        auser.is_authenticated = passwd == user.passwd
+        return auser
+    except:
+        return
 
 
 @app.before_request

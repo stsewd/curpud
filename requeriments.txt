@@ -6,3 +6,4 @@ Flask-Admin
 peewee
 PyMySQL
 wtf-peewee
+flask-login
