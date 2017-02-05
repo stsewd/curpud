@@ -41,9 +41,11 @@ except Exception as e:
 
 
 admin = Admin(app, name='curpud', template_mode='bootstrap3')
-admin.add_view(RelevanceView(Relevance, 'Relevancia'))
-admin.add_view(DataBaseView(DataBase, 'Base de Datos'))
-admin.add_view(JournalView(Journal, 'Revista'))
+admin.add_views(
+    RelevanceView(Relevance, 'Categorías', category='Revista'),
+    DataBaseView(DataBase, 'Bases de Datos', category='Revista'),
+    JournalView(Journal, 'Revistas', category='Revista')
+)
 
 
 @app.before_request

@@ -19,7 +19,8 @@ class BaseModel(orm.Model):
 
 
 class BaseModelView(ModelView):
-    pass
+    can_export = True
+    details_modal = True
 
 
 class Relevance(BaseModel):
@@ -41,6 +42,8 @@ class RelevanceView(BaseModelView):
             'label': name_label
         }
     }
+
+    column_searchable_list = ['name']
 
 
 class DataBase(BaseModel):
@@ -65,7 +68,7 @@ class DataBaseView(BaseModelView):
         'web_page': web_page_label,
         'relevance': relevance_label
     }
-    
+
     form_args = {
         'name': {
             'label': name_label
@@ -77,6 +80,8 @@ class DataBaseView(BaseModelView):
             'label': relevance_label
         }
     }
+
+    column_searchable_list = ['name', 'web_page', Relevance.name]
 
 
 class Journal(BaseModel):
@@ -120,3 +125,5 @@ class JournalView(BaseModelView):
             'label': database_label
         }
     }
+
+    column_searchable_list = ['issn', 'name', 'short_name', DataBase.name]
