@@ -10,6 +10,7 @@ filtro = regional o internacional
   "publicaciones": [
     {
       "doi": "00000",
+      "numero_citas": "0",
       "revista": {
         "nombre": "nombre",
         "issn": "0000",
