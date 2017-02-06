@@ -141,3 +141,13 @@ class JournalView(BaseModelView):
     }
 
     column_searchable_list = ['issn', 'name', 'short_name', DataBase.name]
+
+
+class Teacher(BaseModel):
+    user = orm.ForeignKeyField(User)
+
+
+class Publication(BaseModel):
+    doi = orm.CharField(unique=True)
+    owner = orm.ForeignKeyField(Teacher, related_name='publications')
+    journal = orm.ForeignKeyField(Journal)
