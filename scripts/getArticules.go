@@ -9,15 +9,16 @@ import (
 	"regexp"
 	"strconv"
 	"sync"
+	"github.com/namsral/flag"
 )
 
-type Knowledge struct {
+type Model struct {
 	SortName string `csv:"ShortName"`
 	LongName string `csv:"LongName"`
 	Issn     string `csv:"Issn"`
 }
 
-func GetDataKnowledge(url string) (knowledge []Knowledge) {
+func GetDataKnowledge(url string) (knowledge []Model) {
 	resp, _ := http.Get(url)
 
 	parser := html.NewTokenizer(resp.Body)
@@ -41,7 +42,7 @@ func GetDataKnowledge(url string) (knowledge []Knowledge) {
 				tokenType = parser.Next()
 			}
 
-			knowledge = append(knowledge, Knowledge{
+			knowledge = append(knowledge, Model{
 				SortName: short_name[1],
 				LongName: string(parser.Raw()),
 				Issn:     issn[1],
@@ -54,7 +55,7 @@ func GetDataKnowledge(url string) (knowledge []Knowledge) {
 	fmt.Println(url)
 	return
 }
-func InitKnowledge() (knowledge []Knowledge) {
+func InitKnowledge() (knowledge []Model) {
 	var wg sync.WaitGroup
 
 	url := "http://ip-science.thomsonreuters.com" +
@@ -82,8 +83,19 @@ func SaveData(nameFile string, data interface{}) {
 	gocsv.MarshalFile(data, file)
 }
 
-func main() {
 
-	SaveData("knowledge", InitKnowledge())
+
+
+func main() {
+	var name string
+
+	flag.StringVar(&name, "name","", "get data base")
+	flag.Parse()
+	switch name {
+	case "knowledge":
+		SaveData("knowledge", InitKnowledge())
+	default:
+		fmt.Println("option no valida")
+	}
 
 }
