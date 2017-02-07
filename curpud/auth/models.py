@@ -18,4 +18,9 @@ class User(BaseModel):
 
 
 class AuthUser(flask_login.UserMixin):
-    pass
+
+    @property
+    def is_admin(self):
+        user = User.get(User.login == self.id)
+        return user.is_admin
+
