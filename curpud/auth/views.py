@@ -19,6 +19,9 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 @auth.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        user = flask_login.current_user
+        if user.is_authenticated:
+            return redirect(url_for('publications.list', user=user.id))
         return render_template('auth/login.html')
 
     login = request.form['login']
