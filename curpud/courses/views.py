@@ -15,7 +15,7 @@ from curpud import CurpudError
 from curpud import app
 from curpud.tools import get_first_error
 from .forms import AddCourseForm
-from .models import Course
+from .models import Course, TypeCourse
 
 
 cour = Blueprint('courses', __name__, url_prefix='/cursos')
@@ -35,7 +35,7 @@ def index():
 @cour.route('/profesor/<user>/')
 def list(user):
     form = AddCourseForm()
-    courses = Course.select().where(Course.owner == user)
+    courses = Course.select().where(Course.assistent == user)
     return render_template(
         'courses/list.html',
         courses=courses,
@@ -51,7 +51,6 @@ def view(id):
 @cour.route('/add/', methods=['POST'])
 @flask_login.login_required
 def add():
-    raise CurpudError("Acción no implementada por completo!")
     user = flask_login.current_user
     form = AddCourseForm()
     if form.validate_on_submit():
@@ -60,6 +59,16 @@ def add():
         f.save(os.path.join(
             app.instance_path, 'files', 'courses', filename
         ))
+
+        Course.create(
+            assistent = user.id,
+            name=form.name.data,
+            place = form.place.data,
+            type = TypeCourse.get(form.type.data == TypeCourse.id),
+            init_date = form.init_date.data,
+            end_date = form.end_date.data,
+            proofs_file = filename
+        )
         return redirect(url_for('courses.list', user=user.id))
     else:
         raise CurpudError(get_first_error(form))
