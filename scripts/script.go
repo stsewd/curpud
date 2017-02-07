@@ -13,12 +13,83 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 )
+
+
+type Sjr struct{
+	Title string
+	Issn string `orm:"pk"`
+	Sjr string
+	Index_sjr string
+	Cites string
+}
+
 
 type Model struct {
 	SortName string `csv:"ShortName"`
 	LongName string `csv:"LongName"`
 	Issn     string `csv:"Issn"`
+	Sjr string `csv:"Sjr"`
+	Index string `csv:"Index"`
+}
+
+
+const AliasName string = "default"
+const NameDriver string = "mysql"
+const Name string = "root"
+const Pass string = "12345"
+const NameDB string = "trivialbox"
+
+const UrlDB string = Name + ":" + Pass + "@/" + NameDB + "?charset=utf8"
+
+func init() {
+	orm.RegisterDriver(
+		NameDriver,
+		orm.DRMySQL,
+	)
+
+	orm.RegisterModel(
+		new(Sjr),
+	)
+
+	orm.RegisterDataBase(
+		AliasName,
+		NameDriver,
+		UrlDB,
+		100,
+	)
+}
+
+func ORM() orm.Ormer {
+	o := orm.NewOrm()
+	o.Using(AliasName)
+	return o
+}
+
+func GetSjr(isnn string) Sjr {
+	sjr := Sjr{
+		Issn:isnn,
+	}
+	err := ORM().Read(&sjr)
+	if err == orm.ErrNoRows {
+		fmt.Println("No result found.")
+	} else if err == orm.ErrMissPK {
+		fmt.Println("No primary key found.")
+	}
+	return sjr
+}
+
+func ReformarIssn(issn string) string{
+	var issnFinal string
+	for _, char := range strings.Split(issn,""){
+		if (char != "-"){
+			issnFinal+=char
+		}
+	}
+
+	return "ISSN " + issnFinal
 }
 
 func GetDataKnowledge(url string) (knowledge []Model) {
@@ -44,11 +115,14 @@ func GetDataKnowledge(url string) (knowledge []Model) {
 			for index := 0; index < 3; index++ {
 				tokenType = parser.Next()
 			}
-
+			sjr := GetSjr(ReformarIssn(issn[1]))
 			knowledge = append(knowledge, Model{
 				SortName: short_name[1],
 				LongName: string(parser.Raw()),
 				Issn:     issn[1],
+				Sjr:sjr.Sjr,
+				Index:sjr.Index_sjr,
+
 			})
 		} else {
 			continue
