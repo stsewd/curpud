@@ -176,7 +176,7 @@ class Publication(BaseModel):
     @property
     def pages(self):
         return self._get_json()['message']['page']
-    
+
     @property
     def cites_number(self):
         return self._get_json()['message']['reference-count']
@@ -185,6 +185,20 @@ class Publication(BaseModel):
         url = "http://api.crossref.org/works/{}".format(self.doi)
         r = requests.get(url)
         return r.json()
+
+    def to_dict(self):
+        j = self.journal
+        return {
+            'doi': self.doi,
+            'numero_citas': self.cites_number,
+            'revista': {
+                "nombre": j.name,
+                "issn": j.issn,
+                "relevancia": j.database.relevance.name,
+                "ranking": j.sjr,
+                "indexacion": j.index
+            }
+        }
 
 
 class PublicationView(BaseModelView):

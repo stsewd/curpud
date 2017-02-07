@@ -146,6 +146,51 @@ def index():
     return redirect(url_for('publications.index'))
 
 
+@app.route('/api/publicaciones/<user>/')
+def api_list(user):
+    json = {}
+    try:
+        json = {
+            'status': 'ok',
+            'profesor': user,
+            'publicaciones': [
+                p.to_dict()
+                for p in Publication.select().where(
+                    Publication.owner == user
+                )
+            ]
+        }
+    except Exception as e:
+        raise e
+        json = {
+            'status': 'error'
+        }
+    finally:
+        return jsonify(json)
+
+
+@app.route('/api/publicaciones/<user>/<relevance>/')
+def api_list_relevance(user, relevance):
+    try:
+        json = {
+            'status': 'ok',
+            'profesor': user,
+            'publicaciones': [
+                p.to_dict()
+                for p in Publication.select().where(
+                    Publication.journal.database.relevance.name == relevance &
+                    Publication.owner == user
+                )
+            ]
+        }
+    except:
+        json = {
+            'status': 'error'
+        }
+    finally:
+        return jsonify(json)
+
+
 from .auth.views import auth
 from .courses.views import cour
 from .publications.views import pub
