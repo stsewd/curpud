@@ -43,7 +43,7 @@ def list(user):
     )
 
 
-@pub.route('/doi/<doi>/')
+@pub.route('/doi/<path:doi>/')
 def view(doi):
     return render_template('publications/view.html', publication="PUBLICACION")
 
