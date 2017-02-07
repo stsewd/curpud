@@ -1,3 +1,5 @@
+{% import "macros.html" as macros %}
+{% from "macros.html" import navbar with context %}
 {% set isnpjax = "X-PJAX" not in request.headers %}
 {% if isnpjax %}
 <!DOCTYPE html>
@@ -33,6 +35,7 @@
       <div class="loader"></div>
     </div>
 
+    {{ navbar() }}
     <div class="container">
 {% endif %}
       {% block main_container %}
@@ -46,8 +49,12 @@
               {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('publications.list', user=current_user.id) }}">Mis Publicaciones</a></li>
               {% endif %}
+              <li><a href="{{ url_for('courses.index') }}">Cursos</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('courses.list', user=current_user.id) }}">Mis Cursos</a></li>
+              {% endif %}
               {% if current_user.is_authenticated and current_user.is_admin %}
-              <li><a href="{{ url_for('journal.index_view') }}">Zona de Administración</a></li>
+              <li class="bg-danger"><a class="text-danger" href="{{ url_for('journal.index_view') }}">Zona de Administración</a></li>
               {% endif %}
               <li class="hidden-xs">
                 <hr>

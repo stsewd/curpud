@@ -34,7 +34,12 @@ db = orm.MySQLDatabase(
 from .publications.models import (
     Relevance, RelevanceView,
     DataBase, DataBaseView,
-    Journal, JournalView
+    Journal, JournalView,
+    Publication, PublicationView
+)
+from .courses.models import (
+    TypeCourse, TypeCourseView,
+    Course, CourseView
 )
 from .auth.models import User, AuthUser
 
@@ -42,6 +47,8 @@ try:
     db.connect()
     db.create_tables([User])
     db.create_tables([Relevance, DataBase, Journal])
+    db.create_tables([Publication])
+    db.create_tables([TypeCourse, Course])
 except Exception as e:
     pass
 
@@ -53,9 +60,12 @@ admin = flask_admin.Admin(
     template_mode='bootstrap3'
 )
 admin.add_views(
-    RelevanceView(Relevance, 'Categorías', category='Revista'),
-    DataBaseView(DataBase, 'Bases de Datos', category='Revista'),
-    JournalView(Journal, 'Revistas', category='Revista')
+    RelevanceView(Relevance, 'Categorías'),
+    DataBaseView(DataBase, 'Bases de Datos'),
+    JournalView(Journal, 'Revistas'),
+    PublicationView(Publication, 'Publicaciones'),
+    TypeCourseView(TypeCourse, 'Tipos de Cursos'),
+    CourseView(Course, 'Cursos')
 )
 
 

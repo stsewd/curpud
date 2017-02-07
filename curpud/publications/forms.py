@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField
 from wtforms.validators import DataRequired
 
@@ -10,3 +11,4 @@ class AddPublicationForm(FlaskForm):
     doi_or_name = StringField('DOI o Nombre de la Publicación', validators=[
         DataRequired()
     ])
+    proofs = FileField('Pruebas')

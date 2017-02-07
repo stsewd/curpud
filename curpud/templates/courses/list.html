@@ -2,21 +2,21 @@
 {% extends "layout.html" %}
 
 
-{% set form_id = "form-add-publication" %}
+{% set form_id = "form-add-course" %}
 
 
-{% block title %}Publicaciones{% endblock %}
+{% block title %}Cursos{% endblock %}
 
 
 {% block body %}
-<h1>Publicaciones</h1>
+<h1>Cursos</h1>
 {% if current_user.is_authenticated %}
 <hr>
-<h2>Nueva Publicación</h2>
+<h2>Nuevo Curso</h2>
 {{
   macros.make_form(
     form, form_id,
-    url=url_for('publications.add'),
+    url=url_for('courses.add'),
     form_extras='method="post" enctype="multipart/form-data"' | safe)
 }}
 {% endif %}

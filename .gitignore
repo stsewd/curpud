@@ -90,3 +90,5 @@ ENV/
 
 # Bower components
 curpud/static/bower_components/
+.idea/
+instance/files/*
