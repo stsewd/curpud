@@ -9,7 +9,27 @@
 
 
 {% block body %}
-<h1>AGREGAR NOMBRE</h1>
+<h1>{{ publication.title }}</h1>
+<strong>doi</strong>: {{ publication.doi }}
+<br>
+<strong>Autor</strong>: {{ publication.owner }}
+<br>
+<strong>Revista</strong>: {{ publication.journal.name }}
+<br>
+<strong>SJR</strong>: {{ publication.journal.sjr }}
+<br>
+<strong>Índice</strong>: {{ publication.journal.index }}
+<br>
+<strong>Base de datos</strong>: {{ publication.journal.database.name }}
+<br>
+<strong>Relevancia</strong>: {{ publication.journal.database.relevance.name }}
+<br>
+<strong>Fecha de indexación</strong>: {{ publication.indexed_date }}
+<br>
+<strong>Páginas</strong>: {{ publication.pages }}
+<br>
+<strong>Número de citas</strong>: {{ publication.cites_number }}
+<br>
 {% endblock %}
 
 

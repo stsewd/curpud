@@ -2,6 +2,7 @@ import peewee as orm
 from flask_admin.contrib.peewee import ModelView
 from flask import url_for, redirect
 import flask_login
+import requests
 
 from curpud import db
 from curpud.auth.models import User
@@ -162,6 +163,28 @@ class Publication(BaseModel):
     owner = orm.CharField()
     journal = orm.ForeignKeyField(Journal)
     proofs_file = orm.CharField(unique=True)
+
+    @property
+    def title(self):
+        return self._get_json()['message']['title'][0]
+
+    @property
+    def indexed_date(self):
+        date = self._get_json()['message']['indexed']['date-parts'][0]
+        return "/".join(map(str, date))
+
+    @property
+    def pages(self):
+        return self._get_json()['message']['page']
+    
+    @property
+    def cites_number(self):
+        return self._get_json()['message']['reference-count']
+
+    def _get_json(self):
+        url = "http://api.crossref.org/works/{}".format(self.doi)
+        r = requests.get(url)
+        return r.json()
 
 
 class PublicationView(BaseModelView):

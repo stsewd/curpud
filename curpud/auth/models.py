@@ -16,6 +16,10 @@ class User(BaseModel):
     passwd = orm.CharField()
     is_admin = orm.BooleanField(default=False)
 
+    @property
+    def full_name(self):
+        return "{} {}".format(self.name, self.lastname)
+
 
 class AuthUser(flask_login.UserMixin):
 

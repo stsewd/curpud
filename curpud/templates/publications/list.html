@@ -17,6 +17,7 @@
       <th>DOI</th>
       <th>Autor</th>
       <th>Revista</th>
+      <th>Relevancia</th>
     </tr>
   </thead>
   <tbody>
@@ -36,7 +37,10 @@
         </a>
       </td>
       <td>
-        {{ pub.journal.name }}
+        {{ pub.journal.short_name or pub.journal.name }}
+      </td>
+      <td>
+        {{ pub.journal.database.relevance.name }}
       </td>
     </tr>
     {% endfor %}

@@ -45,7 +45,15 @@ def list(user):
 
 @pub.route('/doi/<path:doi>/')
 def view(doi):
-    return render_template('publications/view.html', publication="PUBLICACION")
+    try:
+        publication = Publication.get(Publication.doi == doi)
+    except:
+        abort(404)
+    else:
+        return render_template(
+            'publications/view.html',
+            publication=publication
+        )
 
 
 @pub.route('/add/', methods=['POST'])
