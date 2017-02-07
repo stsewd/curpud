@@ -8,7 +8,8 @@ from flask import (
     url_for,
     abort,
     request,
-    render_template
+    render_template,
+    send_from_directory
 )
 
 from curpud import CurpudError
@@ -85,3 +86,16 @@ def delete():
     raise CurpudError("Acción no implementada!")
     user = flask_login.current_user
     return redirect(url_for('publications.list', user=user.id))
+
+
+@pub.route('/file/<path:doi>')
+def serve_file(doi):
+    try:
+        publication = Publication.get(Publication.doi == doi)
+    except:
+        abort(404)
+    else:
+        return send_from_directory(
+            os.path.join(app.instance_path, 'files', 'publications'),
+            publication.proofs_file
+        )

@@ -10,11 +10,13 @@
 
 {% block body %}
 <h1>{{ publication.title }}</h1>
-<strong>doi</strong>: {{ publication.doi }}
+<strong>DOI</strong>: {{ publication.doi }}
 <br>
 <strong>Autor</strong>: {{ publication.owner }}
 <br>
 <strong>Revista</strong>: {{ publication.journal.name }}
+<br>
+<strong>ISSN de Revista</strong>: {{ publication.journal.issn }}
 <br>
 <strong>SJR</strong>: {{ publication.journal.sjr }}
 <br>
@@ -30,6 +32,10 @@
 <br>
 <strong>Número de citas</strong>: {{ publication.cites_number }}
 <br>
+<strong>Pruebas</strong>
+<a href="{{ url_for('publications.serve_file', doi=publication.doi) }}" target="_blank">
+  {{ publication.proofs_file }}
+</a>
 {% endblock %}
 
 
