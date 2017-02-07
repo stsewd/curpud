@@ -14,6 +14,10 @@ short_name_label = 'Nombre Corto'
 database_label = 'Base de Datos'
 web_page_label = 'Página Web'
 relevance_label = 'Relevancia'
+doi_label = 'DOI'
+owner_label = 'Autor'
+journal_label = 'Revista'
+proofs_file_label = 'Pruebas'
 
 
 class BaseModel(orm.Model):
@@ -149,6 +153,32 @@ class Teacher(BaseModel):
 
 class Publication(BaseModel):
     doi = orm.CharField(unique=True)
-    owner = orm.ForeignKeyField(Teacher, related_name='publications')
+    owner = orm.CharField()
     journal = orm.ForeignKeyField(Journal)
     proofs_file = orm.CharField(unique=True)
+
+
+class PublicationView(BaseModelView):
+    column_labels = {
+        'doi': doi_label,
+        'owner': owner_label,
+        'journal': journal_label,
+        'proofs_file': proofs_file_label
+    }
+
+    form_args = {
+        'doi': {
+            'label': doi_label
+        },
+        'owner': {
+            'label': owner_label
+        },
+        'journal': {
+            'label': journal_label
+        },
+        'proofs_file': {
+            'label': proofs_file_label
+        }
+    }
+
+    column_searchable_list = ['doi', 'owner', Journal.name]
