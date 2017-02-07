@@ -11,6 +11,7 @@
 {% block body %}
 <h1>Publicaciones</h1>
 {% if current_user.is_authenticated %}
+<hr>
 <h2>Nueva Publicación</h2>
 {{
   macros.make_form(

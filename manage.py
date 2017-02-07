@@ -15,8 +15,17 @@ def run():
 
 @cli.command()
 def users():
+    create_relevances()
     create_admin_user()
     create_normal_user()
+
+
+def create_relevances():
+    from curpud.publications.models import Relevance
+    relevance = Relevance(name="internacional")
+    relevance.save()
+    relevance = Relevance(name="regional")
+    relevance.save()
 
 
 def create_admin_user():
