@@ -35,9 +35,10 @@ def index():
 @pub.route('/profesor/<user>/')
 def list(user):
     form = AddPublicationForm()
+    publications = Publication.select().where(Publication.owner == user)
     return render_template(
         'publications/list.html',
-        publications=[],
+        publications=publications,
         form=form
     )
 
