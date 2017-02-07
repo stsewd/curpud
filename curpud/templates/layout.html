@@ -42,8 +42,10 @@
           {% block sidebar %}
           <nav>
             <ul class="nav nav-pills nav-stacked">
-              <li><a href="">Uno</a></li>
-              <li><a href="">Dos</a></li>
+              <li><a href="{{ url_for('publications.index') }}">Publicaciones</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('publications.list', user=current_user.id) }}">Mis Publicaciones</a></li>
+              {% endif %}
               <li><a href="">Tres</a></li>
               <li class="hidden-xs">
                 <hr>
