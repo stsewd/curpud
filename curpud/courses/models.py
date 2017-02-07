@@ -13,6 +13,8 @@ name_label = 'Nombre'
 type_label = 'Tipo'
 proofs_file_label = 'Pruebas'
 assistent_label = 'Asistente'
+init_date_label = 'Fecha de Inicio'
+end_date_label = 'Fecha de Fin'
 
 
 class BaseModel(orm.Model):
@@ -69,6 +71,8 @@ class Course(BaseModel):
         TypeCourse,
         related_name='courses'
     )
+    init_date = orm.DateField()
+    end_date = orm.DateField()
     proofs_file = orm.CharField(unique=True)
 
     def __str__(self):
@@ -81,6 +85,8 @@ class CourseView(BaseModelView):
         'assistent': assistent_label,
         'place': place_label,
         'type': type_label,
+        'init_date': init_date_label,
+        'end_date': end_date_label,
         'proofs_file': proofs_file_label
     }
 
@@ -96,6 +102,12 @@ class CourseView(BaseModelView):
         },
         'type': {
             'label': type_label
+        },
+        'init_date': {
+            'label': init_date_label
+        },
+        'end_date': {
+            'label': end_date_label
         },
         'proofs_file': {
             'label': proofs_file_label

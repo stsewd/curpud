@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, DateField
 from wtforms.validators import DataRequired
 
 from .models import TypeCourse
@@ -20,6 +20,13 @@ class AddCourseForm(FlaskForm):
         ],
         coerce=int
     )
+    init_date = DateField('Fecha de Inicio', validators=[
+        DataRequired()
+    ])
+    end_date = DateField('Fecha de Fin', validators=[
+        DataRequired()
+    ])
+
     proofs = FileField('Pruebas')
 
     def __init__(self):
