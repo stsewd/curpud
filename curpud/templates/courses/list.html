@@ -38,7 +38,9 @@
             {{ pub.place}}
         </td>
         <td>
+            <a href="{{ url_for('courses.view', id=pub.id) }}">
             {{ pub.name}}
+            </a>
         </td>
         <td>
             <a href="{{ url_for('publications.list', user=pub.assistent) }}">
