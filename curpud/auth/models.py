@@ -23,3 +23,8 @@ class AuthUser(flask_login.UserMixin):
     def is_admin(self):
         user = User.get(User.login == self.id)
         return user.is_admin
+
+    @property
+    def name(self):
+        user = User.get(User.login == self.id)
+        return "{} {}".format(user.name, user.lastname)
