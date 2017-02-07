@@ -14,8 +14,9 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Nombre</th>
-      <th>Estado</th>
+      <th>DOI</th>
+      <th>Autor</th>
+      <th>Revista</th>
     </tr>
   </thead>
   <tbody>
@@ -25,8 +26,17 @@
         {{ loop.index }}
       </td>
       <td>
+        <a href="{{ url_for('publications.view', doi=pub.doi) }}">
+          {{ pub.doi }}
+        </a>
       </td>
       <td>
+        <a href="{{ url_for('publications.list', user=pub.owner) }}">
+          {{ pub.owner }}
+        </a>
+      </td>
+      <td>
+        {{ pub.journal.name }}
       </td>
     </tr>
     {% endfor %}

@@ -41,7 +41,7 @@ def list(user):
 
 
 @cour.route('/id/<id>/')
-def view(doi):
+def view(id):
     return render_template('courses/view.html', course="COURSE")
 
 
