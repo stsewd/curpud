@@ -8,6 +8,7 @@ from flask import (
     render_template
 )
 
+from curpud import CurpudError
 from .forms import AddPublicationForm
 
 
@@ -42,6 +43,7 @@ def view(doi):
 @pub.route('/add/', methods=['POST'])
 @flask_login.login_required
 def add():
+    raise CurpudError("Acción no implementada!")
     user = flask_login.current_user
     return redirect(url_for('publications.list', user=user.id))
 
@@ -49,5 +51,6 @@ def add():
 @pub.route('/delete/', methods=['POST'])
 @flask_login.login_required
 def delete():
+    raise CurpudError("Acción no implementada!")
     user = flask_login.current_user
     return redirect(url_for('publications.list', user=user.id))
