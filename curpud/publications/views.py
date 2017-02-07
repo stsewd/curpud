@@ -55,7 +55,7 @@ def add():
         f = form.proofs.data
         filename = secure_filename(user.id + f.filename)
         f.save(os.path.join(
-            app.instance_path, 'files', filename
+            app.instance_path, 'files', 'publications', filename
         ))
         return redirect(url_for('publications.list', user=user.id))
     else:

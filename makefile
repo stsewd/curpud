@@ -15,7 +15,8 @@ run:
 install:
 	pip install -r requeriments.txt
 	mysql -u $(DB_USER) -p$(DB_PASS) -e "create database IF NOT EXISTS $(DB_NAME);"
-	mkdir -p instance/files/
+	mkdir -p instance/files/courses/
+	mkdir -p instance/files/publications/
 	$(PYTHON) $(MANAGE_SCRIPT) users
 	cd curpud/static/ && bower install
 

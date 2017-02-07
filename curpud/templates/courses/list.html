@@ -1,0 +1,27 @@
+{% import "macros.html" as macros %}
+{% extends "layout.html" %}
+
+
+{% set form_id = "form-add-course" %}
+
+
+{% block title %}Cursos{% endblock %}
+
+
+{% block body %}
+<h1>Cursos</h1>
+{% if current_user.is_authenticated %}
+<hr>
+<h2>Nuevo Curso</h2>
+{{
+  macros.make_form(
+    form, form_id,
+    url=url_for('courses.add'),
+    form_extras='method="post" enctype="multipart/form-data"' | safe)
+}}
+{% endif %}
+{% endblock %}
+
+
+{% block modals %}
+{% endblock %}

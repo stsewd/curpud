@@ -49,6 +49,10 @@
               {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('publications.list', user=current_user.id) }}">Mis Publicaciones</a></li>
               {% endif %}
+              <li><a href="{{ url_for('courses.index') }}">Cursos</a></li>
+              {% if current_user.is_authenticated %}
+              <li><a href="{{ url_for('courses.list', user=current_user.id) }}">Mis Cursos</a></li>
+              {% endif %}
               {% if current_user.is_authenticated and current_user.is_admin %}
               <li class="bg-danger"><a class="text-danger" href="{{ url_for('journal.index_view') }}">Zona de Administración</a></li>
               {% endif %}
