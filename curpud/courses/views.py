@@ -15,6 +15,7 @@ from curpud import CurpudError
 from curpud import app
 from curpud.tools import get_first_error
 from .forms import AddCourseForm
+from .models import Course
 
 
 cour = Blueprint('courses', __name__, url_prefix='/cursos')
@@ -23,9 +24,10 @@ cour = Blueprint('courses', __name__, url_prefix='/cursos')
 @cour.route('/')
 def index():
     form = AddCourseForm()
+    courses = Course.select()
     return render_template(
         'courses/list.html',
-        courses=[],
+        courses=courses,
         form=form
     )
 
@@ -33,9 +35,10 @@ def index():
 @cour.route('/profesor/<user>/')
 def list(user):
     form = AddCourseForm()
+    courses = Course.select().where(Course.owner == user)
     return render_template(
         'courses/list.html',
-        courses=[],
+        courses=courses,
         form=form
     )
 
