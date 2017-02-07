@@ -10,6 +10,17 @@
 
 {% block body %}
 CURSO
+<h1>{{course.name}}</h1>
+<strong>Fecha de inicio</strong>: {{course.init_date}}
+<br>
+<strong>Fecha final</strong>: {{course.end_date}}
+<br>
+<strong>Tipo</strong>: {{course.type}}
+<br>
+<strong>Lugar</strong>: {{course.place}}
+<br>
+<strong>Asistente</strong>: {{course.assistent}}
+
 {% endblock %}
 
 

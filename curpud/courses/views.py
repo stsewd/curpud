@@ -45,7 +45,13 @@ def list(user):
 
 @cour.route('/id/<id>/')
 def view(id):
-    return render_template('courses/view.html', course="COURSE")
+    try:
+        course = Course.get(Course.id == id)
+    except:
+        abort(404)
+    else:
+        return render_template('courses/view.html',
+                               course=course)
 
 
 @cour.route('/add/', methods=['POST'])
