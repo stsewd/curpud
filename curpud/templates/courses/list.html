@@ -9,15 +9,58 @@
 
 
 {% block body %}
+
 <h1>Cursos</h1>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+        <th>Tipo</th>
+        <th>Lugar</th>
+        <th>Nombre</th>
+        <th>Asistente</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for pub in courses %}
+    <tr>
+        <td>
+            {{ pub.init_date}}
+        </td>
+        <td>
+            {{ pub.end_date}}
+        </td>
+        <td>
+            {{ pub.type}}
+        </td>
+        <td>
+            {{ pub.place}}
+        </td>
+        <td>
+            {{ pub.name}}
+        </td>
+        <td>
+            <a href="{{ url_for('publications.list', user=pub.assistent) }}">
+
+                {{pub.assistent}}
+            </a>
+
+        </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% if current_user.is_authenticated %}
 <hr>
 <h2>Nuevo Curso</h2>
 {{
-  macros.make_form(
-    form, form_id,
-    url=url_for('courses.add'),
-    form_extras='method="post" enctype="multipart/form-data"' | safe)
+macros.make_form(
+form, form_id,
+url=url_for('courses.add'),
+form_extras='method="post" enctype="multipart/form-data"' | safe)
 }}
 {% endif %}
 {% endblock %}
