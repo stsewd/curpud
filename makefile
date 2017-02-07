@@ -15,6 +15,7 @@ run:
 install:
 	pip install -r requeriments.txt
 	mysql -u $(DB_USER) -p$(DB_PASS) -e "create database IF NOT EXISTS $(DB_USER);"
+	mkdir -p instance/files/
 	$(PYTHON) $(MANAGE_SCRIPT) users
 
 test:

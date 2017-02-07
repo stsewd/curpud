@@ -151,3 +151,4 @@ class Publication(BaseModel):
     doi = orm.CharField(unique=True)
     owner = orm.ForeignKeyField(Teacher, related_name='publications')
     journal = orm.ForeignKeyField(Journal)
+    proofs_file = orm.CharField(unique=True)

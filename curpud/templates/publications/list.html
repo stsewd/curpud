@@ -12,21 +12,15 @@
 <h1>Publicaciones</h1>
 {% if current_user.is_authenticated %}
 <h2>Nueva Publicación</h2>
-{{ macros.make_form(form, form_id) }}
+{{
+  macros.make_form(
+    form, form_id,
+    url=url_for('publications.add'),
+    form_extras='method="post" enctype="multipart/form-data"' | safe)
+}}
 {% endif %}
 {% endblock %}
 
 
 {% block modals %}
-{% endblock %}
-
-
-{% block scripts %}
-{% if current_user.is_authenticated %}
-{{ macros.js_send_request(
-    form_id,
-    url_for('publications.add'),
-    "Publicación agregada.")
-}}
-{% endif %}
 {% endblock %}
