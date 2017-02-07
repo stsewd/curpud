@@ -20,6 +20,7 @@ def users():
     create_admin_user()
     create_normal_user()
     populate_databases()
+    populate_journals_international()
     populate_journals_regional()
 
 
@@ -104,6 +105,28 @@ def populate_journals_regional():
                 except:
                     continue
 
+
+def populate_journals_international():
+    import csv
+    from curpud.publications.models import Journal, DataBase
+    base_path = 'scripts/output/'
+    for filename, database in [('knowledge.csv', 'web of knowledge')]:
+        with open(base_path + filename) as csvfile:
+            csv_reader = csv.reader(csvfile)
+            next(csv_reader)  # Headers
+            for row in csv_reader:
+                short_name, long_name, issn, sjr, index = row
+                try:
+                    Journal.create(
+                        name=long_name,
+                        short_name=short_name,
+                        issn=issn,
+                        database=DataBase.get(DataBase.name == database),
+                        sjr=sjr,
+                        index=index
+                    )
+                except:
+                    continue
 
 if __name__ == "__main__":
     cli()

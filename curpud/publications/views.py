@@ -15,6 +15,7 @@ from curpud import CurpudError
 from curpud import app
 from .forms import AddPublicationForm
 from curpud.tools import get_first_error
+from .models import Journal, Publication
 
 
 pub = Blueprint('publications', __name__, url_prefix='/publicaciones')
@@ -23,9 +24,10 @@ pub = Blueprint('publications', __name__, url_prefix='/publicaciones')
 @pub.route('/')
 def index():
     form = AddPublicationForm()
+    publications = Publication.select()
     return render_template(
         'publications/list.html',
-        publications=[],
+        publications=publications,
         form=form
     )
 
@@ -48,7 +50,6 @@ def view(doi):
 @pub.route('/add/', methods=['POST'])
 @flask_login.login_required
 def add():
-    raise CurpudError("Acción no implementada por completo!")
     user = flask_login.current_user
     form = AddPublicationForm()
     if form.validate_on_submit():
@@ -57,6 +58,13 @@ def add():
         f.save(os.path.join(
             app.instance_path, 'files', 'publications', filename
         ))
+        # TODO: revisar que el doi pertenezca a una revista
+        Publication.create(
+            doi=form.doi.data,
+            proofs_file=filename,
+            owner=user.id,
+            journal=Journal.get(Journal.issn == form.issn.data)
+        )
         return redirect(url_for('publications.list', user=user.id))
     else:
         raise CurpudError(get_first_error(form))

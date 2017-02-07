@@ -112,6 +112,12 @@ class Journal(BaseModel):
     short_name = orm.CharField(
         null=True
     )
+    sjr = orm.DoubleField(
+        null=True
+    )
+    index = orm.IntegerField(
+        null=True
+    )
     database = orm.ForeignKeyField(
         DataBase,
         related_name='journals'

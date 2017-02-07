@@ -10,6 +10,29 @@
 
 {% block body %}
 <h1>Publicaciones</h1>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pub in publications %}
+    <tr>
+      <td scope="row">
+        {{ loop.index }}
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% if current_user.is_authenticated %}
 <hr>
 <h2>Nueva Publicación</h2>

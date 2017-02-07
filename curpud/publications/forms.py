@@ -8,7 +8,7 @@ class AddPublicationForm(FlaskForm):
     issn = StringField('ISSN de la Revista', validators=[
         DataRequired()
     ])
-    doi_or_name = StringField('DOI o Nombre de la Publicación', validators=[
+    doi = StringField('DOI de la Publicación', validators=[
         DataRequired()
     ])
     proofs = FileField('Pruebas')
