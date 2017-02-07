@@ -9,15 +9,46 @@
 
 
 {% block body %}
+
 <h1>Cursos</h1>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Nombre</th>
+        <th>Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for pub in courses %}
+    <tr>
+        <td scope="row">
+            {{ loop.index }}
+        </td>
+
+        <td>
+            {{pub.name}}
+        </td>
+        <td>
+            {{pub.assistent}}
+        </td>
+
+        <td>
+            {{pub.end_date}}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% if current_user.is_authenticated %}
 <hr>
 <h2>Nuevo Curso</h2>
 {{
-  macros.make_form(
-    form, form_id,
-    url=url_for('courses.add'),
-    form_extras='method="post" enctype="multipart/form-data"' | safe)
+macros.make_form(
+form, form_id,
+url=url_for('courses.add'),
+form_extras='method="post" enctype="multipart/form-data"' | safe)
 }}
 {% endif %}
 {% endblock %}
