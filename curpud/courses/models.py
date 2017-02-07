@@ -69,6 +69,7 @@ class Course(BaseModel):
         TypeCourse,
         related_name='courses'
     )
+    proofs_file = orm.CharField(unique=True)
 
     def __str__(self):
         return "{} {}".format(self.name, self.place)
@@ -79,7 +80,8 @@ class CourseView(BaseModelView):
         'name': name_label,
         'assistent': assistent_label,
         'place': place_label,
-        'type': type_label
+        'type': type_label,
+        'proofs_file': proofs_file_label
     }
 
     form_args = {
@@ -94,6 +96,9 @@ class CourseView(BaseModelView):
         },
         'type': {
             'label': type_label
+        },
+        'proofs_file': {
+            'label': proofs_file_label
         }
     }
 
