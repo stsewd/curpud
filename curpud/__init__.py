@@ -5,6 +5,7 @@ from flask import (
     redirect,
     url_for,
     abort,
+    jsonify,
     g
 )
 import flask_login
@@ -109,6 +110,25 @@ def after_request(response):
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
+
+
+# Custom errors
+class CurpudError(Exception):
+    def __init__(self, msg):
+        Exception.__init__(self, msg)
+        self.msg = msg
+
+    def to_dict(self):
+        return {
+            'description': self.msg,
+            'status': 'error'
+        }
+
+
+@app.errorhandler(CurpudError)
+def fbcm_error_handler(error):
+    response = jsonify(error.to_dict())
+    return response
 
 
 @app.route('/')

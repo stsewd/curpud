@@ -1,0 +1,27 @@
+{% import "macros.html" as macros %}
+{% extends "layout.html" %}
+
+
+{% set form_id = "form-add-publication" %}
+
+
+{% block title %}Agregar Publicación{% endblock %}
+
+
+{% block body %}
+<h1>Nueva Publicación</h1>
+{{ macros.make_form(form, form_id) }}
+{% endblock %}
+
+
+{% block modals %}
+{% endblock %}
+
+
+{% block scripts %}
+{{ macros.js_send_request(
+    form_id,
+    url_for('publications.add'),
+    "Publicación agregada.")
+}}
+{% endblock %}

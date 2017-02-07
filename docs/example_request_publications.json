@@ -1,0 +1,25 @@
+URL_BASE/api/publicaciones/{profesor_id}/
+URL_BASE/api/publicaciones/{profesor_id}/{filtro}
+
+profesor_id = número de cédula
+filtro = regional o internacional
+
+{
+  "status": "ok",
+  "profesor": "0000000000",
+  "publicaciones": [
+    {
+      "doi": "00000",
+      "numero_citas": "0",
+      "revista": {
+        "nombre": "nombre",
+        "issn": "0000",
+        "relevancia": "internacional",
+        "ranking": "0.0",
+        "indexacion": "0"
+      }
+    }, {
+      ....
+    }
+  ]
+}
