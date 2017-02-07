@@ -8,7 +8,8 @@ from flask import (
     url_for,
     abort,
     request,
-    render_template
+    render_template,
+    send_from_directory
 )
 
 from curpud import CurpudError
@@ -50,8 +51,10 @@ def view(id):
     except:
         abort(404)
     else:
-        return render_template('courses/view.html',
-                               course=course)
+        return render_template(
+            'courses/view.html',
+            course=course
+        )
 
 
 @cour.route('/add/', methods=['POST'])
@@ -67,13 +70,13 @@ def add():
         ))
 
         Course.create(
-            assistent = user.id,
+            assistent=user.id,
             name=form.name.data,
-            place = form.place.data,
-            type = TypeCourse.get(form.type.data == TypeCourse.id),
-            init_date = form.init_date.data,
-            end_date = form.end_date.data,
-            proofs_file = filename
+            place=form.place.data,
+            type=TypeCourse.get(form.type.data == TypeCourse.id),
+            init_date=form.init_date.data,
+            end_date=form.end_date.data,
+            proofs_file=filename
         )
         return redirect(url_for('courses.list', user=user.id))
     else:
@@ -86,3 +89,16 @@ def delete():
     raise CurpudError("Acción no implementada!")
     user = flask_login.current_user
     return redirect(url_for('courses.list', user=user.id))
+
+
+@cour.route('/file/<id>')
+def serve_file(id):
+    try:
+        course = Course.get(Course.id == id)
+    except:
+        abort(404)
+    else:
+        return send_from_directory(
+            os.path.join(app.instance_path, 'files', 'courses'),
+            course.proofs_file
+        )
