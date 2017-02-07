@@ -1,3 +1,6 @@
+{% import "macros.html" as macros %}
+{% from "macros.html" import navbar with context %}
+
 {% extends 'admin/base.html' %}
 
 {% block head_meta %}
@@ -17,6 +20,7 @@
 {% endblock %}
 
 {% block page_body %}
+{{ navbar() }}
 <div class="container">
   <div class="row">
     <div class="container col-sm-3">
