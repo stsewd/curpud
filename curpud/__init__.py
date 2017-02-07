@@ -160,8 +160,7 @@ def api_list(user):
                 )
             ]
         }
-    except Exception as e:
-        raise e
+    except:
         json = {
             'status': 'error'
         }
